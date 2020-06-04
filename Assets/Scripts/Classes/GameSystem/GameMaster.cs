@@ -11,19 +11,7 @@ namespace GameMaster.core
         float roundTime;
         [SerializeField]
         float[] scores;
-
-        // Start is called before the first frame update
-        void Start()
-        {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
-
+        
         void FixedUpdate()
         {
             if (roundTime <= 0) RoundEnd();
