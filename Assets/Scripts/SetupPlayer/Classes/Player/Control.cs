@@ -24,14 +24,14 @@ namespace Sprites.Player
         }
         public void DoMove(Vector2 kinetic)
         {
-            transform.Translate(kinetic * Time.deltaTime);
-            animator.SetFloat("movement", Mathf.Abs(kinetic.x) + Mathf.Abs(kinetic.y));
-            if (isFlipable)
-                transform.localScale = new Vector3(transform.localScale.x > 0 ? kinetic.x >= 0 ? 1 : -1 : kinetic.x <= 0 ? -1 : 1, 1, 1);
+            MoveState(kinetic);
+            if (ObstacleDetect(kinetic) == false)
+                transform.Translate(kinetic * Time.deltaTime);
+
         }
         public void DoSkill(int mode)
         {
-
+            //Skill feature.
         }
         void Awake()
         {
@@ -41,6 +41,21 @@ namespace Sprites.Player
         void Update()
         {
             if (attackDuration > 0) attackDuration -= Time.deltaTime;
+        }
+        bool ObstacleDetect(Vector2 kinetic)
+        {
+            Vector2 value = transform.position.normalized;
+            if (value + kinetic == Vector2.zero)
+            {
+
+            }
+            return false;
+        }
+        void MoveState(Vector2 kinetic)
+        {
+            animator.SetFloat("movement", Mathf.Abs(kinetic.x) + Mathf.Abs(kinetic.y));
+            if (isFlipable)
+                transform.localScale = new Vector3(transform.localScale.x > 0 ? kinetic.x >= 0 ? 1 : -1 : kinetic.x <= 0 ? -1 : 1, 1, 1);
         }
     }
 }
