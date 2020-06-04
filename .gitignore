@@ -63,7 +63,7 @@ sysinfo.txt
 *.unitypackage
 *.symbols.zip
 *.DS_Store
-.vscode/
+.vscode/*
 
 # Crashlytics generated file
 crashlytics-build.properties
