@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Transform : MonoBehaviour
+public class InstantiateWormHole : MonoBehaviour
 {
     [SerializeField]
     int[] WormHole_1_range, WormHole_2_range;
