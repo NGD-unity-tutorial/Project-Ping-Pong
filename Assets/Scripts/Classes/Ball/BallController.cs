@@ -12,22 +12,28 @@ public class BallController : MonoBehaviour
     private Color32 color;
     private bool isThrough;           //判斷是否穿過蟲洞
     private float timer;
-
     private Vector3 wormHole_1_Pos;
     private Vector3 wormHole_2_Pos;
+    private Vector3 nowSpot;           //紀錄當前位置
+    private Quaternion nowRotation;    //紀錄當前角度
+
 
     public GameObject wormHole_1;
     public GameObject wormHole_2;
     public Animator animator;
     public SpriteRenderer spriteRenderer;
-    public float angle=0;
+    public float angle;
 
-
+    /*private void Awake()
+    {
+        nowRotation = gameObject.transform.rotation;
+    }*/
     void Start()
     {
         disappear = 255;
         speed = 10;
-        angle = 0;
+        //angle = nowRotation.z;
+        //angle = 20;
         CountDir();
         Disappear();
         SetColor();
@@ -38,6 +44,8 @@ public class BallController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        nowRotation = gameObject.transform.rotation;                //紀錄當前位置角度
+        nowSpot = gameObject.transform.position;
         
         if (angle >= 360)
         {
@@ -50,7 +58,8 @@ public class BallController : MonoBehaviour
         CountDir();
         transform.eulerAngles = new Vector3(0, 0, angle);           //決定火球飛行方向
         transform.Translate(direction * speed * Time.deltaTime);    //火球前進
-        if (Input.GetKey(KeyCode.Q))
+
+        if (Input.GetKey(KeyCode.Q))                                //隱形球
         {
             //animator.
             Disappear();
@@ -60,7 +69,7 @@ public class BallController : MonoBehaviour
             disappear=255;
         }
 
-        if (Input.GetKey(KeyCode.R))
+        if (Input.GetKey(KeyCode.R))                                //旋轉球
         {
             angle +=3 ;
         }
@@ -169,7 +178,7 @@ public class BallController : MonoBehaviour
         color.b = 255;
         color.g = 255;
     }
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnCollisionEnter2D(Collision2D collision)          //碰撞牆壁
     {
         if (collision.gameObject.name == "Up")
         {
@@ -190,8 +199,8 @@ public class BallController : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D collision)
     {
-        wormHole_1_Pos = Transform.position_1;
-        wormHole_2_Pos = Transform.position_2;
+        wormHole_1_Pos = InstantiateWormHole.position_1;
+        wormHole_2_Pos = InstantiateWormHole.position_2;
         if (isThrough == false)
         {
             if (collision.gameObject.CompareTag("WormHole_1"))
