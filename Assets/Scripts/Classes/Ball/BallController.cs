@@ -146,6 +146,7 @@ public class BallController : MonoBehaviour
 
     void CountDir()
     {
+
         direction = new Vector2(1,0);
         //direction = new Vector2(Mathf.Cos(angle * (Mathf.PI / 180)), Mathf.Sin(angle * (Mathf.PI / 180)));
     }
@@ -215,5 +216,6 @@ public class BallController : MonoBehaviour
             }
             isThrough = true;
         }
+
     }
 }

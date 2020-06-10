@@ -11,9 +11,12 @@ namespace Sprites.Player
         float attackDuration;
         [SerializeField]
         bool isFlipable;
+        [SerializeField]
+        float obstacleDistance;
 
         Rigidbody2D rb;
         Animator animator;
+
         public void DoAttack(Vector2 str)
         {
             if (attackDuration <= 0)
@@ -25,8 +28,9 @@ namespace Sprites.Player
         public void DoMove(Vector2 kinetic)
         {
             MoveState(kinetic);
-            if (ObstacleDetect(kinetic) == false)
-                transform.Translate(kinetic * Time.deltaTime);
+            ObstacleDetect(ref kinetic);
+            Debug.Log(kinetic);
+            transform.Translate(kinetic * Time.deltaTime);
 
         }
         public void DoSkill(int mode)
@@ -42,14 +46,16 @@ namespace Sprites.Player
         {
             if (attackDuration > 0) attackDuration -= Time.deltaTime;
         }
-        bool ObstacleDetect(Vector2 kinetic)
+        void ObstacleDetect(ref Vector2 kinetic)
         {
-            Vector2 value = transform.position.normalized;
-            if (value + kinetic == Vector2.zero)
+            if (Physics2D.Raycast(transform.position, new Vector2(kinetic.x, 0), obstacleDistance, LayerMask.GetMask("Obstacle")))
             {
-
+                kinetic = new Vector2(0, kinetic.y);
             }
-            return false;
+            if (Physics2D.Raycast(transform.position, new Vector2(0, kinetic.y), obstacleDistance, LayerMask.GetMask("Obstacle")))
+            {
+                kinetic = new Vector2(kinetic.x, 0);
+            }
         }
         void MoveState(Vector2 kinetic)
         {
